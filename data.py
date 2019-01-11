@@ -1,4 +1,4 @@
-post_data = {
+_post = {
     'timeOf': '2017-04-23 21:12:17', #always new
     'identifier': 'not-your-business',
     'source': 'phpstorm',
@@ -6,8 +6,9 @@ post_data = {
     'direction': 'undetermined',
     'hash': '6e320431b2abd54033f07e364bba838b' #always new
     }
-log_line = ''
-log_time = ''
-log_card = ''
-serv_resp = ''
+_line = ''
+_time = ''
+_card = ''
+_resp = ''
+
 API_KEY = '098f6bcd4621d373cade4e832627b4f6'
