@@ -3,35 +3,21 @@ from urllib.parse import urlencode
 from imp import reload
 import ctypes
 import sys
-import parametres
 import hashlib
-import pycurl
 
 import data
 
 
-#code = hashlib.md5() #making a hash code instance
-#buffer = BytesIO() #buffer for server response
-
-logger = open('log.txt', 'a+') #defining a file with logs
 
 
-
-              
-# def TouchMeNow(): #library, connection parametres, dev data
-
-print('HERE IS JOHHNY!', '\n')
-
-###connecting to a library
-comm_lib = ctypes.windll.LoadLibrary("plcommpro.dll")
+comm_lib = ctypes.windll.LoadLibrary("plcommpro.dll") ### connecting to a library
 print('\n', repr(comm_lib))
 
-###connection parametres
-dev_str = ctypes.create_string_buffer(b"protocol=TCP, ipaddress=192.168.9.41, port=4370,t imeout=2000, passwd=") #controller address
+dev_str = ctypes.create_string_buffer(data._addr) ### connection parametres
 print('\n', repr(dev_str))
 
 ###connecting with device
-dev_handle=comm_lib.Connect(dev_str)
+dev_handle = comm_lib.Connect(dev_str)
 print('\n', dev_handle)
 
 ###getting device information
@@ -104,3 +90,5 @@ while 1:
 
     #logger.write('\n')
     #logger.write(repr(rt_log.value))
+if __name__ == '__main__':
+    logger = open('log.txt', 'a+') #defining a file with logs

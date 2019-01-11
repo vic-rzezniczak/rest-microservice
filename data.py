@@ -6,6 +6,8 @@ _post = {
     'direction': 'undetermined',
     'hash': '6e320431b2abd54033f07e364bba838b' #always new
     }
+
+_addr = b'protocol=TCP, ipaddress=192.168.9.41, port=4370,t imeout=2000, passwd='
 _line = ''
 _time = ''
 _card = ''
