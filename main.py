@@ -1,8 +1,7 @@
-from ctypes import *
-from time import *
 from io import BytesIO
 from urllib.parse import urlencode
 from imp import reload
+import ctypes
 import sys
 import parametres
 import hashlib
@@ -15,18 +14,7 @@ import pycurl
 logger = open('log.txt', 'a+') #defining a file with logs
 
 
-post_data = {
-    'timeOf': '2017-04-23 21:12:17', #always new
-    'identifier': 'not-your-business',
-    'source': 'phpstorm',
-    'plate': '2342794197', #always 'new'
-    'direction': 'undetermined',
-    'hash': '6e320431b2abd54033f07e364bba838b' #always new
-    }
-log_line = ''
-log_time = ''
-log_card = ''
-serv_resp = ''
+
               
 # def TouchMeNow(): #library, connection parametres, dev data
 
