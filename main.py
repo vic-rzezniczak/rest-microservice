@@ -9,34 +9,20 @@ import data
 
 
 
-
-comm_lib = ctypes.windll.LoadLibrary("plcommpro.dll") ### connecting to a library
-print('\n', repr(comm_lib))
-
-dev_str = ctypes.create_string_buffer(data._addr) ### connection parametres
-print('\n', repr(dev_str))
-
-###connecting with device
-dev_handle = comm_lib.Connect(dev_str)
-print('\n', dev_handle)
-
-###getting device information
-info_buffer = ctypes.create_string_buffer(2048)
-print('\nBuffer created')		
-info_items = ctypes.create_string_buffer(b"DeviceID, Door1SensorType, Door1Drivertime, Door1Intertime") #dev_data
-print('\nItems to obtain: ', info_items)
-	
-dev_info = comm_lib.GetDeviceParam(dev_handle, info_buffer, 256, info_items)
-print('\nItems returned', dev_info)
-
-print('\n', repr(info_buffer.value))
-
-###opening doors	
-comm_lib.ControlDevice(dev_handle, 1, 1, 2, 6, 0, '') #oper_id, door_num, door_output_oper, oper, none, none
+def connect():
+    comm_lib = ctypes.windll.LoadLibrary("plcommpro.dll") ### connecting to a library
+    dev_str = ctypes.create_string_buffer(data._addr) ### connection parametres
+    dev_handle = comm_lib.Connect(dev_str) ### connecting with device
+    info_buffer = ctypes.create_string_buffer(2048)
+    info_items = ctypes.create_string_buffer(b"DeviceID, Door1SensorType, Door1Drivertime, Door1Intertime") ### getting device information
+    dev_info = comm_lib.GetDeviceParam(dev_handle, info_buffer, 256, info_items)
+    '''opening doors'''
+    comm_lib.ControlDevice(dev_handle, 1, 1, 2, 6, 0, '') #oper_id, door_num, door_output_oper, oper, none, none
+    return global comm_lib
 
 input('\nShall I start?')
 
-###starting to monitor reader states
+
 while 1:
     rt_log = ctypes.create_string_buffer(256) #creating a buffer, why I don't know
     comm_lib.GetRTLog(dev_handle, rt_log, 256) #passing a single log to a buffer
@@ -54,11 +40,11 @@ while 1:
     ###hashing
     code = hashlib.md5() #making a hash code instance
     code.update(log_time.encode('utf-8'))
-    code.update('not-your-business'.encode('utf-8'))
+    code.update('not-your-business'.encode('utf-8')) ### 'wiktor-src'
     code.update('phpstorm'.encode('utf-8'))
     code.update(log_card.encode('utf-8'))
     code.update('undetermined'.encode('utf-8'))
-    code.update('not-your-business'.encode('utf-8'))
+    code.update(data.API_KEY.encode('utf-8'))
     ###creating POST request
     data._post['timeOf'] = log_time
     data._post['plate'] = log_card
